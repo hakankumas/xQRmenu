@@ -29,6 +29,7 @@ model Products {
     title           String
     description     String?   @db.Text
     content         String?   @db.Text
+    privateNote     String?   @db.Text
     price           Decimal   @db.Decimal(10, 2)
     preparedTime    Int?
     slug            String    @unique
@@ -42,5 +43,21 @@ model Products {
     deletedAt       DateTime? @db.DateTime(0)
 
     category        Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "products_categoryId")
+    portions        Portions[]
     @@index([categoryId], map: "categoryId")
+}
+
+model Portions {
+    id          Int       @id @default(autoincrement()) @db.UnsignedInt
+    productId   Int       @db.UnsignedInt
+    portion     String?   @db.Text
+    grammage    String?   @db.Text      
+    price       Decimal   @db.Decimal(10, 2)
+    active      Boolean   @default(true)
+    deleted     Boolean   @default(false)
+    createdAt   DateTime  @default(now()) @db.DateTime(0)
+    updatedAt   DateTime? @db.DateTime(0)
+    deletedAt   DateTime? @db.DateTime(0)
+
+    product     Products   @relation(fields: [productId], references: [id], onDelete: Cascade, map: "portions_productId")
 }

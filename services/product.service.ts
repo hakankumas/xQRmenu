@@ -9,6 +9,9 @@ export const productService = {
                     slug,
                 },
             },
+            include: {
+                portions: true,
+            },
         });
     },
 
@@ -17,6 +20,9 @@ export const productService = {
         return await prisma.products.findMany({
             where: {
                 favorite: true,
+            },
+            include: {
+                portions: true,
             },
         });
     },

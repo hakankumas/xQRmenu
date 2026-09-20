@@ -3,13 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import Image from "next/image";
-import { Flame } from "lucide-react";
+import { ChefHat, Flame } from "lucide-react";
 import MenuItem from "./MenuItem";
+import Loading from "@/app/loading";
 
 type Products = {
     id: string;
     title: string;
     description: string;
+    privateNote?: string;
     price: number;
     img: string;
 };
@@ -29,11 +31,11 @@ export default function FavoriteList() {
 
     const [selectedItem, setSelectedItem] = useState<any>(null);
 
-    if (isLoading) return <div>Yükleniyor...</div>;
-    if (error || !products) return <div>Hata oluştu.</div>;
+    if (isLoading) return <Loading />;
+    if (error || !products) return null;
 
     return (
-        <main className="max-w-md mx-auto px-4 pt-6 space-y-6">
+        <main className="min-w-sm lg:max-w-md mx-auto py-7 space-y-7">
             {products.map((item) => (
                 <div
                     key={item.id}
@@ -51,6 +53,15 @@ export default function FavoriteList() {
                             />
                         )}
 
+                        {item.privateNote && (
+                            <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                                <ChefHat className="w-3.5 h-3.5 text-red-500" />
+                                <span className="text-xs font-semibold bg-linear-to-r from-red-500 to-red-700 bg-clip-text text-transparent">
+                                    Şef'in Özel Notu
+                                </span>
+                            </div>
+                        )}
+
                         <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
                             <Flame className="w-3.5 h-3.5 text-orange-500" />
                             <span className="text-xs font-semibold bg-linear-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
@@ -65,7 +76,7 @@ export default function FavoriteList() {
                                 {item.title}
                             </h3>
                             <span className="text-lg font-bold text-orange-500 whitespace-nowrap">
-                                ₺{String(item.price)}
+                                {String(item.price)} TL
                             </span>
                         </div>
                         <p className="mt-2 text-sm text-gray-500 line-clamp-2">

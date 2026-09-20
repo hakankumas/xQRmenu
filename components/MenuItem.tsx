@@ -1,4 +1,4 @@
-import { X, Flame } from "lucide-react";
+import { X, Flame, ChefHat, Megaphone, Pizza } from "lucide-react";
 import Image from "next/image";
 
 export default function MenuItem({
@@ -31,16 +31,16 @@ export default function MenuItem({
                     <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
                         <Flame className="w-3.5 h-3.5 text-orange-500" />
                         <span className="text-xs font-semibold bg-linear-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                            Favori Ürün
+                            Sevilen Ürün
                         </span>
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-2 p-5 overflow-y-auto">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900">
+                        <div className="text-2xl font-bold text-gray-900">
                             {selectedItem.title}
-                        </h2>
+                        </div>
 
                         <p className="text-sm text-gray-600 font-medium">
                             {selectedItem.description}
@@ -48,17 +48,63 @@ export default function MenuItem({
                     </div>
 
                     <p className="text-2xl font-bold text-orange-500 whitespace-nowrap">
-                        {selectedItem.price} ₺
+                        {selectedItem.price} TL
                     </p>
 
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-900 tracking-wider">
-                            Detaylar:
-                        </h3>
-                        <p className="text-gray-600 leading-relaxed text-sm">
-                            {selectedItem.content}
-                        </p>
-                    </div>
+                    {selectedItem.privateNote && (
+                        <div>
+                            <div className="flex items-center gap-1 text-sm font-bold text-gray-900 tracking-wider">
+                                <ChefHat className="w-3.5 h-3.5 text-black" />
+                                <span>Şef'in Özel Notu</span>
+                            </div>
+                            <p className="text-gray-600 text-sm">
+                                {selectedItem.privateNote}
+                            </p>
+                        </div>
+                    )}
+
+                    {selectedItem.content && (
+                        <div>
+                            <div className="flex items-center gap-1 text-sm font-bold text-gray-900 tracking-wider">
+                                <Megaphone className="w-3.5 h-3.5 text-black" />
+                                <span>Açıklama</span>
+                            </div>
+                            <p className="text-gray-600 text-sm text-justify">
+                                {selectedItem.content}
+                            </p>
+                        </div>
+                    )}
+
+                    {selectedItem.portions.length > 0 && (
+                        <div>
+                            <div className="flex items-center gap-1 text-sm font-bold text-gray-900 tracking-wider">
+                                <Pizza className="w-3.5 h-3.5 text-black" />
+                                <span>Porsiyonlar</span>
+                            </div>
+                            <div className="text-gray-600 text-sm">
+                                {selectedItem.portions.map((portion: any) => (
+                                    <div key={portion.id}>
+                                        <div>
+                                            <span>
+                                                {portion.portion
+                                                    ? `${portion.portion} - `
+                                                    : ""}
+                                            </span>
+                                            <span>
+                                                {portion.grammage
+                                                    ? `${portion.grammage} - `
+                                                    : ""}
+                                            </span>
+                                            <span className="text-orange-500 font-bold">
+                                                {portion.price &&
+                                                    `${portion.price} TL`}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     <button
                         onClick={() => setSelectedItem(null)}

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "QR Menu",
+    title: "QR Menu | Lezzet Şöleni",
     description: "Best QR Menu",
 };
 
