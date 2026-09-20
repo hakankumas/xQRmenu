@@ -11,3 +11,36 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+model Categories {
+    id            Int        @id @default(autoincrement()) @db.UnsignedInt
+    title         String
+    description   String?    @db.Text
+    slug          String     @unique
+    img           String?    @default("default.webp")
+    active        Boolean    @default(true)
+    createdAt     DateTime   @default(now()) @db.DateTime(0)
+    updatedAt     DateTime?  @db.DateTime(0)
+    products      Products[]
+}
+
+model Products {
+    id              Int       @id @default(autoincrement()) @db.UnsignedInt
+    title           String
+    description     String?   @db.Text
+    content         String?   @db.Text
+    price           Decimal   @db.Decimal(10, 2)
+    preparedTime    Int?
+    slug            String    @unique
+    img             String?   @default("default.webp")
+    categoryId      Int       @db.UnsignedInt
+    active          Boolean   @default(true)
+    favorite        Boolean   @default(false)
+    deleted         Boolean   @default(false)
+    createdAt       DateTime  @default(now()) @db.DateTime(0)
+    updatedAt       DateTime? @db.DateTime(0)
+    deletedAt       DateTime? @db.DateTime(0)
+
+    category        Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "products_categoryId")
+    @@index([categoryId], map: "categoryId")
+}
