@@ -29,7 +29,7 @@ export default function RootLayout({
             lang="tr"
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
-            <body className="min-h-full flex flex-col no-scrollbar">
+            <body className="min-h-full flex flex-col">
                 <TanStackProvider>
                     <Header />
                     {children}

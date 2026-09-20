@@ -77,14 +77,14 @@ export default function Header() {
                     </div>
                 </div>
 
-                <div className="max-w-md mx-auto px-4 pb-1 overflow-hidden">
+                <div className="max-w-md mx-auto px-4 pb-2 overflow-hidden">
                     <div
                         ref={scrollRef}
                         onMouseDown={onMouseDown}
                         onMouseLeave={onMouseLeave}
                         onMouseUp={onMouseUp}
                         onMouseMove={onMouseMove}
-                        className={`flex space-x-3 overflow-x-auto no-scrollbar pb-2 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+                        className={`flex space-x-3 overflow-x-auto no-scrollbar ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
                     >
                         {data.map(
                             (item: {

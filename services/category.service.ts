@@ -10,6 +10,9 @@ export const categoryService = {
                     some: {},
                 },
             },
+            orderBy: {
+                sort: "asc",
+            },
         });
     },
 };
